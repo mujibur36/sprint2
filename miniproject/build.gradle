@@ -1,0 +1,79 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.6.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") 
+		classpath("org.springframework:springloaded:1.2.7.RELEASE")
+    }
+}
+
+apply plugin: 'groovy'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+
+repositories {
+	mavenCentral()
+}
+
+
+eclipse {
+	project {
+	  buildCommand 'org.eclipse.jdt.core.javabuilder'
+	  buildCommand 'org.eclipse.buildship.core.gradleprojectbuilder'
+	  buildCommand 'org.springframework.ide.eclipse.core.springbuilder'
+	  buildCommand 'org.eclipse.wst.common.project.facet.core.builder'
+	  natures 'org.eclipse.jdt.core.javanature',
+	    'org.eclipse.jdt.groovy.core.groovyNature',
+	  	'org.eclipse.buildship.core.gradleprojectnature', 
+		'org.springframework.ide.eclipse.core.springnature', 
+		'org.eclipse.wst.common.project.facet.core.nature'
+	}
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '4.1'
+}
+
+
+// tag::versions[]
+ext {
+	jasperVersion = '9.0.0.M26'
+	lombokVersion = '1.16.18'
+	groovyVersion = '2.4.4'
+}
+// end::versions[]
+
+dependencies {
+	// Spring Boot
+	compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+	compile("org.springframework.boot:spring-boot-devtools")
+	// JSP
+	compile("org.apache.tomcat.embed:tomcat-embed-jasper:$jasperVersion")
+	compile("javax.servlet:jstl:1.2")
+	// Lombok
+//	compile("org.projectlombok:lombok:$lombokVersion")
+	// Bootstrap
+	compile("org.webjars:bootstrap:3.3.7")
+
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// PROJECT SPECIFIC
+///////////////////////////////////////////////////////////////////////////////
+
+// name of the jar to be generated
+jar {
+    baseName = 'miniproject'
+    version = 'sprint2.17-18'
+}
+
+// name of the Eclipse project
+eclipse.project.name = 'miniproject'
+
+
