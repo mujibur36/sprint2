@@ -21,8 +21,25 @@ public class DealValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		DealFormDto dto = (DealFormDto) target;
 
-		// TODO: add validation code here
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "discount", "", "Field discount cannot be empty.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "startDate", "", "A start date must be provided.");
 		
+		
+		if (dto.getDiscount() == 0 || dto.getDiscount() == 0.0) {
+			errors.rejectValue("discount", "", "Discount must be different from 0.");
+		}
+		
+		
+		if(dto.getDiscount() < 0.0) {
+			errors.rejectValue("discount", "", "Discount cannot be negative.");
+		}
+		
+		
+		if(dto.getEndDate() != null && dto.getEndDate().isBefore(dto.getStartDate()) ) {
+			errors.rejectValue("endDate", "", "An end date cannot precede the start date.");
+		}
+		
+
 	}
 	
 	

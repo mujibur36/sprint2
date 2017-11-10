@@ -29,19 +29,7 @@ public class ProductController {
     public String productDetail(@ModelAttribute("product") Product product, @RequestParam(value="productId", required=false, defaultValue="-1") int productId) {
     	if (productId >= 0) {
     		// modify
-    		
-    		// BEGIN Java lambda expression example
-    		// the following code is equivalent to this Java lambda expression
-    		// Product p2 = EMarketApp.getStore().getProductList().stream().filter(p -> (((Product) p).getId() == productId)).findAny().get();
-    		Product p2 = null;
-    		for (Product p : EMarketApp.getStore().getProductList()) {
-    			if (p.getId()==productId) {
-    				p2 = p;
-    				break;
-    			}
-    		}
-    		// END Java lambda expression example
-    		
+    		Product p2 = EMarketApp.getStore().getProductList().stream().filter(p -> (((Product) p).getId() == productId)).findAny().get();
     		product.setId(p2.getId());
     		if (p2.getName().equals("")) 
     			throw new SpringException("Name is empty.");
@@ -69,7 +57,6 @@ public class ProductController {
    		
     	model.addAttribute("productList", EMarketApp.getStore().getProductList());
         return "form/productMaster";
-//    	return "redirect:/product/";
     }   
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)

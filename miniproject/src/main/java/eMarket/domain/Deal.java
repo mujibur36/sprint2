@@ -33,12 +33,31 @@ public class Deal {
 	public void close() {
 		this.endDate = new Date().toInstant().atZone(ZoneId.of("GMT")).toLocalDate();
 	}
-
 	public boolean isActive() {
 		
-		// TODO: implement this method and modify the return statement accordingly
+		//implement this method and modify the return statement accordingly
 		
-		return false;
+		boolean active = false;
+		LocalDate today = eMarket.EMarketApp.getSystemDate();
+		
+		if(endDate == null) {
+			if(startDate.isBefore(today) || startDate.isEqual(today)) {
+				active = true;
+			}
+		}
+		
+		if(endDate != null) {
+			
+			if(startDate.isBefore(today) || startDate.isEqual(today)) {
+				
+				if(endDate.isAfter(today) || endDate.isEqual(today)) {
+					active = true;
+				}
+			
+			}
+		}
+		
+		return active;
 	}
 	
 	public String getStartDateAsString() {
